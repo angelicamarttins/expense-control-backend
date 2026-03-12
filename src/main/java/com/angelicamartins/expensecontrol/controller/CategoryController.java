@@ -1,4 +1,4 @@
-package com.angelica_martins.expense_control.controller;
+package com.angelicamartins.expensecontrol.controller;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +10,7 @@ public class CategoryController {
 
   @PostMapping
   public String createCategory(String greeting) {
+    System.out.println(greeting);
     return greeting;
   }
 

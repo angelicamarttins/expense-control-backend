@@ -1,4 +1,4 @@
-package com.angelica_martins.expense_control;
+package com.angelicamartins.expensecontrol;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

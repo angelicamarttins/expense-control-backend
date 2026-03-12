@@ -1,4 +1,4 @@
-package com.angelica_martins.expense_control;
+package com.angelicamartins.expensecontrol;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
