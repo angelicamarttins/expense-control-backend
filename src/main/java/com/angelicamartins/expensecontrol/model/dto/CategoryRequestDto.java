@@ -1,4 +1,9 @@
 package com.angelicamartins.expensecontrol.model.dto;
 
-public record CategoryRequestDto(String categoryName) {
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record CategoryRequestDto(
+  @NotBlank
+  String categoryName) {
 }
