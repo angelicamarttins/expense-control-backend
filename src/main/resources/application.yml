@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: expense-control-backend
+  datasource:
+    database: local
+    url: jdbc:postgresql://localhost:5432/local
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  sql:
+    init:
+      continue-on-error: true
+      mode: always
+    schema-locations: classpath:/import.sql
