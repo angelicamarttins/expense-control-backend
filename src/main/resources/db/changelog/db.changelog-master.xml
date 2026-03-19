@@ -6,5 +6,6 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <include file="migrations/202603141635-create-category-table.yml" relativeToChangelogFile="true"/>
+    <include file="migrations/202603190800-create-expense-table.yml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
