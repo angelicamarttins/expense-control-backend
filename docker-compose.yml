@@ -1,9 +1,9 @@
 services:
   db:
     image: postgres:alpine
-    restart: always
+    restart: no
     environment:
-      - POSTGRES_DB=local
+      - POSTGRES_DB=expense_control
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     ports:
