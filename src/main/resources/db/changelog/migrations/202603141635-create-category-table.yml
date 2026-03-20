@@ -4,6 +4,7 @@ databaseChangeLog:
       author: Angélica Martins
       changes:
         - createTable:
+            ifNotExists: true
             tableName: category
             columns:
               - column:
