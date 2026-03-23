@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202603230825-add-default-category
+      author: Angélica Martins
+      changes:
+        - loadData:
+            tableName: category
+            file: ../../default-categories-insert.csv
+            relativeToChangelogFile: true
+            separator: ;

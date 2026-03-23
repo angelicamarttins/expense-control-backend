@@ -7,5 +7,6 @@
 
     <include file="migrations/202603141635-create-category-table.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202603190800-create-expense-table.yml" relativeToChangelogFile="true"/>
+    <include file="migrations/202603230825-add-default-category.yml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
