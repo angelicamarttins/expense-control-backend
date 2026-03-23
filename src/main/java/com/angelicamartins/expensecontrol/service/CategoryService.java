@@ -7,6 +7,7 @@ import com.angelicamartins.expensecontrol.model.Category;
 import com.angelicamartins.expensecontrol.model.dto.CategoryDto;
 import com.angelicamartins.expensecontrol.model.dto.CategoryRequestDto;
 import com.angelicamartins.expensecontrol.repository.CategoryRepository;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,12 @@ public class CategoryService {
     Category savedCategory = categoryRepository.save(fromRequestDto(categoryRequestDto));
 
     return fromEntity(savedCategory);
+  }
+
+  public CategoryDto getCategory(UUID categoryId) {
+    Category category = categoryRepository.findById(categoryId).orElseThrow(RuntimeException::new);
+
+    return fromEntity(category);
   }
 
 }
