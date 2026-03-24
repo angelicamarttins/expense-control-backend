@@ -3,8 +3,10 @@ package com.angelicamartins.expensecontrol.controller;
 import com.angelicamartins.expensecontrol.model.dto.CategoryDto;
 import com.angelicamartins.expensecontrol.model.dto.CategoryRequestDto;
 import com.angelicamartins.expensecontrol.service.CategoryService;
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,8 +29,13 @@ public class CategoryController {
 
   @GetMapping("/{categoryId}")
   public CategoryDto getCategory(@PathVariable UUID categoryId) {
-    System.out.println("pegando category");
     return categoryService.getCategory(categoryId);
+  }
+
+  @GetMapping
+  public List<CategoryDto> getCategories(Pageable pageable) {
+
+    return categoryService.getCategories(pageable);
   }
 
 }
