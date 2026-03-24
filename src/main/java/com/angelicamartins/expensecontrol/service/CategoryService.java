@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Data
@@ -36,9 +36,9 @@ public class CategoryService {
   }
 
   public List<CategoryDto> getCategories(Pageable pageable) {
-    Page<Category> categories = categoryRepository.findAll(pageable);
+    Slice<Category> categories = categoryRepository.findAllBy(pageable);
 
-    return categories.map(CategoryBuilder::fromEntity).toList();
+    return categories.map(CategoryBuilder::fromEntity).getContent();
   }
 
 }
