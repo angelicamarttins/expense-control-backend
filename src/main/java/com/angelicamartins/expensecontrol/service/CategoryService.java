@@ -41,4 +41,10 @@ public class CategoryService {
     return categories.map(CategoryBuilder::fromEntity).getContent();
   }
 
+  public void deleteCategory(UUID categoryId) {
+    categoryRepository.findById(categoryId).orElseThrow(RuntimeException::new);
+
+    categoryRepository.deleteById(categoryId);
+  }
+
 }
