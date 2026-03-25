@@ -21,8 +21,7 @@ public class CategoryBuilder {
       category.getCategoryName(),
       category.getDefaultCategory(),
       category.getCreatedAt(),
-      category.getUpdatedAt(),
-      category.getDeletedAt()
+      category.getUpdatedAt()
     );
   }
 

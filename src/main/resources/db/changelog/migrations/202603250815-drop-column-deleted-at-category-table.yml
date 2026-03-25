@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202603250815-drop-column-deleted-at-category-table
+      author: Angélica Martins
+      changes:
+        - dropColumn:
+            tableName: category
+            columnName: deleted_at
+      rollback:
+        - addColumn:
+            tableName: category
+            columns:
+              - column:
+                  name: deleted_at
+                  type: timestamp
+                  constraints:
+                    nullable: true
