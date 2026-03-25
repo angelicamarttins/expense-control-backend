@@ -8,6 +8,7 @@ import com.angelicamartins.expensecontrol.model.CategoryBuilder;
 import com.angelicamartins.expensecontrol.model.dto.CategoryDto;
 import com.angelicamartins.expensecontrol.model.dto.CategoryRequestDto;
 import com.angelicamartins.expensecontrol.repository.CategoryRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -45,6 +46,17 @@ public class CategoryService {
     categoryRepository.findById(categoryId).orElseThrow(RuntimeException::new);
 
     categoryRepository.deleteById(categoryId);
+  }
+
+  public CategoryDto updateCategory(UUID categoryId, CategoryRequestDto categoryRequestDto) {
+    Category category = categoryRepository.findById(categoryId).orElseThrow(RuntimeException::new);
+
+    category.setCategoryName(categoryRequestDto.categoryName());
+    category.setUpdatedAt(LocalDateTime.now());
+
+    categoryRepository.save(category);
+
+    return fromEntity(category);
   }
 
 }

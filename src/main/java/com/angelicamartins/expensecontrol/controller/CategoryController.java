@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,14 @@ public class CategoryController {
   @DeleteMapping("/{categoryId}")
   public void deleteCategory(@PathVariable UUID categoryId) {
     categoryService.deleteCategory(categoryId);
+  }
+
+  @PatchMapping("/{categoryId}")
+  public CategoryDto updateCategory(
+    @PathVariable UUID categoryId,
+    @Validated @RequestBody CategoryRequestDto categoryRequestDto
+  ) {
+    return categoryService.updateCategory(categoryId, categoryRequestDto);
   }
 
 }
