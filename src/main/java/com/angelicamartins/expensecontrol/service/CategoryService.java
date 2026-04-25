@@ -3,7 +3,7 @@ package com.angelicamartins.expensecontrol.service;
 import static com.angelicamartins.expensecontrol.model.CategoryBuilder.fromEntity;
 import static com.angelicamartins.expensecontrol.model.CategoryBuilder.fromRequestDto;
 
-import com.angelicamartins.expensecontrol.exception.GeneralHttpException;
+import com.angelicamartins.expensecontrol.exception.CategoryNotFound;
 import com.angelicamartins.expensecontrol.model.Category;
 import com.angelicamartins.expensecontrol.model.CategoryBuilder;
 import com.angelicamartins.expensecontrol.model.dto.CategoryDto;
@@ -32,7 +32,9 @@ public class CategoryService {
   }
 
   public CategoryDto getCategory(UUID categoryId) {
-    Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new GeneralHttpException("aaa"));
+    Category category = categoryRepository
+      .findById(categoryId)
+      .orElseThrow(() -> new CategoryNotFound(categoryId));
 
     return fromEntity(category);
   }
