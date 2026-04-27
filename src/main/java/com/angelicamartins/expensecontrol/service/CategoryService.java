@@ -1,15 +1,14 @@
 package com.angelicamartins.expensecontrol.service;
 
-import static com.angelicamartins.expensecontrol.model.CategoryBuilder.fromEntity;
-import static com.angelicamartins.expensecontrol.model.CategoryBuilder.fromRequestDto;
+import static com.angelicamartins.expensecontrol.model.dto.CategoryDto.fromEntity;
+import static com.angelicamartins.expensecontrol.model.dto.CategoryDto.fromRequestDto;
 
 import com.angelicamartins.expensecontrol.exception.CategoryNotFound;
 import com.angelicamartins.expensecontrol.model.Category;
-import com.angelicamartins.expensecontrol.model.CategoryBuilder;
 import com.angelicamartins.expensecontrol.model.dto.CategoryDto;
 import com.angelicamartins.expensecontrol.model.dto.CategoryRequestDto;
 import com.angelicamartins.expensecontrol.repository.CategoryRepository;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -42,7 +41,7 @@ public class CategoryService {
   public List<CategoryDto> getCategories(Pageable pageable) {
     Slice<Category> categories = categoryRepository.findAllBy(pageable);
 
-    return categories.map(CategoryBuilder::fromEntity).getContent();
+    return categories.map(CategoryDto::fromEntity).getContent();
   }
 
   public void deleteCategory(UUID categoryId) {
@@ -55,7 +54,7 @@ public class CategoryService {
     Category category = categoryRepository.findById(categoryId).orElseThrow(RuntimeException::new);
 
     category.setCategoryName(categoryRequestDto.categoryName());
-    category.setUpdatedAt(LocalDateTime.now());
+    category.setUpdatedAt(ZonedDateTime.now());
 
     categoryRepository.save(category);
 
