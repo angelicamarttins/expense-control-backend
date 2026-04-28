@@ -3,11 +3,11 @@ package com.angelicamartins.expensecontrol.service;
 import static com.angelicamartins.expensecontrol.model.dto.CategoryDto.fromEntity;
 import static com.angelicamartins.expensecontrol.model.dto.CategoryDto.fromRequestDto;
 
-import com.angelicamartins.expensecontrol.exception.CategoryNotFound;
 import com.angelicamartins.expensecontrol.model.Category;
 import com.angelicamartins.expensecontrol.model.dto.CategoryDto;
 import com.angelicamartins.expensecontrol.model.dto.CategoryRequestDto;
 import com.angelicamartins.expensecontrol.repository.CategoryRepository;
+import com.angelicamartins.expensecontrol.validator.CategoryValidator;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 public class CategoryService {
 
   private final CategoryRepository categoryRepository;
+  private final CategoryValidator categoryValidator;
 
   public CategoryDto saveCategory(CategoryRequestDto  categoryRequestDto) {
     Category savedCategory = categoryRepository.save(fromRequestDto(categoryRequestDto));
@@ -31,9 +32,7 @@ public class CategoryService {
   }
 
   public CategoryDto getCategory(UUID categoryId) {
-    Category category = categoryRepository
-      .findById(categoryId)
-      .orElseThrow(() -> new CategoryNotFound(categoryId));
+    Category category = categoryValidator.validateAndReturnCategory(categoryId);
 
     return fromEntity(category);
   }
@@ -45,13 +44,13 @@ public class CategoryService {
   }
 
   public void deleteCategory(UUID categoryId) {
-    categoryRepository.findById(categoryId).orElseThrow(RuntimeException::new);
+    categoryValidator.validateAndReturnCategory(categoryId);
 
     categoryRepository.deleteById(categoryId);
   }
 
   public CategoryDto updateCategory(UUID categoryId, CategoryRequestDto categoryRequestDto) {
-    Category category = categoryRepository.findById(categoryId).orElseThrow(RuntimeException::new);
+    Category category = categoryValidator.validateAndReturnCategory(categoryId);
 
     category.setCategoryName(categoryRequestDto.categoryName());
     category.setUpdatedAt(ZonedDateTime.now());

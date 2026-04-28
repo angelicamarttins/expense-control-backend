@@ -1,20 +1,26 @@
 package com.angelicamartins.expensecontrol.controller;
 
-import static org.springframework.http.HttpStatus.CREATED;
-
-import org.springframework.http.HttpStatus;
+import com.angelicamartins.expensecontrol.model.dto.ExpenseDto;
+import com.angelicamartins.expensecontrol.model.dto.ExpenseRequestDto;
+import com.angelicamartins.expensecontrol.service.ExpenseService;
+import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("expense-control/expense")
 public class ExpenseController {
 
+  private final ExpenseService expenseService;
+
   @PostMapping
-  public ResponseEntity<HttpStatus> createExpense() {
-    return ResponseEntity.ok(CREATED);
+  public ResponseEntity<ExpenseDto> createExpense(@Valid @RequestBody ExpenseRequestDto expenseRequestDto) {
+    return ResponseEntity.ok(expenseService.saveExpense(expenseRequestDto));
   }
 
 }
