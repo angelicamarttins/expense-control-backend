@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,31 +26,33 @@ public class CategoryController {
   private final CategoryService categoryService;
 
   @PostMapping
-  public CategoryDto createCategory(@Validated @RequestBody CategoryRequestDto categoryRequestDto) {
-    return categoryService.saveCategory(categoryRequestDto);
+  public ResponseEntity<CategoryDto> createCategory(@Validated @RequestBody CategoryRequestDto categoryRequestDto) {
+    return ResponseEntity.ok(categoryService.saveCategory(categoryRequestDto));
   }
 
   @GetMapping("/{categoryId}")
-  public CategoryDto getCategory(@PathVariable UUID categoryId) {
-    return categoryService.getCategory(categoryId);
+  public ResponseEntity<CategoryDto> getCategory(@PathVariable UUID categoryId) {
+    return ResponseEntity.ok(categoryService.getCategory(categoryId));
   }
 
   @GetMapping
-  public List<CategoryDto> getCategories(Pageable pageable) {
-    return categoryService.getCategories(pageable);
+  public ResponseEntity<List<CategoryDto>> getCategories(Pageable pageable) {
+    return ResponseEntity.ok(categoryService.getCategories(pageable));
   }
 
   @DeleteMapping("/{categoryId}")
-  public void deleteCategory(@PathVariable UUID categoryId) {
+  public ResponseEntity<Void> deleteCategory(@PathVariable UUID categoryId) {
     categoryService.deleteCategory(categoryId);
+
+    return ResponseEntity.noContent().build();
   }
 
   @PatchMapping("/{categoryId}")
-  public CategoryDto updateCategory(
+  public ResponseEntity<CategoryDto> updateCategory(
     @PathVariable UUID categoryId,
     @Validated @RequestBody CategoryRequestDto categoryRequestDto
   ) {
-    return categoryService.updateCategory(categoryId, categoryRequestDto);
+    return ResponseEntity.ok(categoryService.updateCategory(categoryId, categoryRequestDto));
   }
 
 }

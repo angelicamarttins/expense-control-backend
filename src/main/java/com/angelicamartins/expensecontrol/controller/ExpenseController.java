@@ -23,4 +23,9 @@ public class ExpenseController {
     return ResponseEntity.ok(expenseService.saveExpense(expenseRequestDto));
   }
 
+//  @GetMapping("/{expense_id}")
+//  public ResponseEntity<ExpenseDto> findExpense(@PathVariable UUID expenseId) {
+//    return ResponseEntity.ok();
+//  }
+
 }
