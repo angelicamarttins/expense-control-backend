@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202604300830
+      author: Angélica Martins
+      changes:
+        - renameColumn:
+            tableName: expense
+            newColumnName: category_id
+            oldColumnName: category
+            columnDataType: UUID
+
+      rollback:
+        - renameColumn:
+            tableName: expense
+            oldColumnName: category_id
+            newColumnName: category
+            columnDataType: UUID

@@ -20,11 +20,12 @@ public class ExpenseDto {
   private ZonedDateTime deletedAt;
   private Category category;
 
-  public static Expense fromRequestDto(ExpenseRequestDto expenseRequestDto) {
+  public static Expense fromRequestDto(ExpenseRequestDto expenseRequestDto, Category category) {
     return Expense.builder()
       .description(expenseRequestDto.description())
       .value(expenseRequestDto.value())
       .createdAt(ZonedDateTime.now())
+      .category(category)
       .build();
   }
 

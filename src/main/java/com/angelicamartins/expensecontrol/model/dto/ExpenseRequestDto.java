@@ -9,7 +9,7 @@ import java.util.UUID;
 public record ExpenseRequestDto(
   String description,
   @NotNull
-  @Digits(integer = 13, fraction = 0)
+  @Digits(integer = 13, fraction = 2)
   @DecimalMax("1000000000000")
   BigDecimal value,
   @NotNull
