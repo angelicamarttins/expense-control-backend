@@ -4,8 +4,11 @@ import com.angelicamartins.expensecontrol.model.dto.ExpenseDto;
 import com.angelicamartins.expensecontrol.model.dto.ExpenseRequestDto;
 import com.angelicamartins.expensecontrol.service.ExpenseService;
 import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +26,9 @@ public class ExpenseController {
     return ResponseEntity.ok(expenseService.saveExpense(expenseRequestDto));
   }
 
-//  @GetMapping("/{expense_id}")
-//  public ResponseEntity<ExpenseDto> findExpense(@PathVariable UUID expenseId) {
-//    return ResponseEntity.ok();
-//  }
+  @GetMapping("/{expenseId}")
+  public ResponseEntity<ExpenseDto> findExpense(@PathVariable UUID expenseId) {
+    return ResponseEntity.ok(expenseService.getExpense(expenseId));
+  }
 
 }

@@ -42,6 +42,14 @@ public class CategoryController {
 
   @DeleteMapping("/{categoryId}")
   public ResponseEntity<Void> deleteCategory(@PathVariable UUID categoryId) {
+    // Procurar pedidos com essa categoria, update com categoria default. Só depois apagar a categoria.
+    // Se a categoria for default, precisamos marcar essa categoria como deletada para que não possa retornar visualmente
+    // para o usuário. Isso significa uma série de ajustes:
+    // Adicionar nova coluna na category
+    // Adicionar nova validação no fluxo de delete e estabelecer um fluxo específico para categorias default
+    // No getCategories, não retornar as default excluídas
+    // Ao deletar uma categoria - sendo default ou não -, verificar as despesas associadas a ela e atualizar para uma categoria genérica
+
     categoryService.deleteCategory(categoryId);
 
     return ResponseEntity.noContent().build();
