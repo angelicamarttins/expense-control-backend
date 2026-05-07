@@ -10,8 +10,10 @@ import com.angelicamartins.expensecontrol.model.dto.ExpenseRequestDto;
 import com.angelicamartins.expensecontrol.repository.ExpenseRepository;
 import com.angelicamartins.expensecontrol.validator.CategoryValidator;
 import com.angelicamartins.expensecontrol.validator.ExpenseValidator;
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +36,10 @@ public class ExpenseService {
     Expense savedExpense = expenseValidator.validateAndReturnExpense(expenseId);
 
     return fromEntity(savedExpense);
+  }
+
+  public List<ExpenseDto> getExpenses(PageRequest pageRequest) {
+    return expenseRepository.findAll(pageRequest).stream().map(ExpenseDto::fromEntity).toList();
   }
 
 }
