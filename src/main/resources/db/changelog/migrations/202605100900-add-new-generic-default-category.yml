@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202605100900
+      author: Angélica Martins
+      changes:
+        - loadData:
+            tableName: category
+            file: ../../default-categories-insert.csv
+            relativeToChangelogFile: true
+            separator: ;
