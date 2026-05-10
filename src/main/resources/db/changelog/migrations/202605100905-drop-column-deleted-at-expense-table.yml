@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202605100905
+      author: Angélica Martins
+      changes:
+        - dropColumn:
+            tableName: expense
+            columnName: deleted_at
+      rollback:
+        - addColumn:
+            tableName: expense
+            columns:
+              - column:
+                name: deleted_at
+                type: timestamp
+                constrains:
+                  nullable: true
