@@ -40,9 +40,6 @@ public class Expense {
   @Column(name = "updated_at")
   private ZonedDateTime updatedAt;
 
-  @Column(name = "deleted_at")
-  private ZonedDateTime deletedAt;
-
   @ManyToOne
   @JoinColumn(name = "category_id")
   private Category category;

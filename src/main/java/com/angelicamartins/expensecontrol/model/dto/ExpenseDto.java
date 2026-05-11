@@ -36,7 +36,6 @@ public class ExpenseDto {
       .value(expense.getValue())
       .createdAt(expense.getCreatedAt())
       .updatedAt(expense.getUpdatedAt())
-      .deletedAt(expense.getDeletedAt())
       .category(expense.getCategory())
       .build();
   }

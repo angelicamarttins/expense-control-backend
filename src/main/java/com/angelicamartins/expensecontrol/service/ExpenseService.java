@@ -42,4 +42,10 @@ public class ExpenseService {
     return expenseRepository.findAll(pageRequest).stream().map(ExpenseDto::fromEntity).toList();
   }
 
+  public void deleteExpense(UUID expenseId) {
+    expenseValidator.validateAndReturnExpense(expenseId);
+
+    expenseRepository.deleteById(expenseId);
+  }
+
 }
