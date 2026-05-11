@@ -23,6 +23,7 @@ public class CategoryDto {
   public static Category fromRequestDto(CategoryRequestDto categoryRequestDto) {
     return Category
       .builder()
+      .categoryId(UUID.randomUUID())
       .categoryName(categoryRequestDto.categoryName())
       .defaultCategory(false)
       .createdAt(ZonedDateTime.now())
