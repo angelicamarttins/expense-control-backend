@@ -8,12 +8,6 @@ databaseChangeLog:
             ifNotExists: true
             columns:
               - column:
-                  name: user_category_id
-                  type: UUID
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
                   name: user_id
                   type: UUID
                   constraints:
@@ -32,10 +26,10 @@ databaseChangeLog:
                   type: datetime
                   constraints:
                     nullable: false
-              - addPrimaryKey:
-                  tableName: user_category
-                  columnNames: user_id, category_id
-                  constraintName: pk_user_category
+        - addPrimaryKey:
+            tableName: user_category
+            columnNames: user_id, category_id
+            constraintName: pk_user_category
       rollback:
         - dropTable:
             tableName: user_category
