@@ -11,5 +11,7 @@
     <include file="migrations/202603250815-drop-column-deleted-at-category-table.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202604300830-update-category-id-expense-table.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202605100905-drop-column-deleted-at-expense-table.yml" relativeToChangelogFile="true"/>
+    <include file="migrations/202605311030-create-user-table.yml" relativeToChangelogFile="true"/>
+    <include file="migrations/202605311055-create-user-category-table.yml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
