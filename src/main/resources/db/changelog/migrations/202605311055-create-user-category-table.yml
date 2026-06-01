@@ -1,40 +1,41 @@
 databaseChangeLog:
-  id: 202605311055
-  author: Angélica Martins
-  changes:
-    - createTable:
-        tableName: user_category
-        ifNotExists: true
-        columns:
-          - column:
-              name: user_category_id
-              type: UUID
-              constraints:
-                primaryKey: true
-                nullable: false
-          - column:
-              name: user_id
-              type: UUID
-              constraints:
-                nullable: false
-                foreignKeyName: fk_user_category_user_id
-                references: user(user_id)
-          - column:
-              name: category_id
-              type: UUID
-              constraints:
-                nullable: false
-                foreignKeyName: fk_user_category_category_id
-                references: category(category_id)
-          - column:
-              name: created_at
-              type: datetime
-              constraints:
-                nullable: false
-          - addPrimaryKey:
-              tableName: user_category
-              columnNames: user_id, category_id
-              constraintName: pk_user_category
-  rollback:
-    - dropTable:
-        tableName: user_category
+  - changeSet:
+      id: 202605311055
+      author: Angélica Martins
+      changes:
+        - createTable:
+            tableName: user_category
+            ifNotExists: true
+            columns:
+              - column:
+                  name: user_category_id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_category_user_id
+                    references: user(user_id)
+              - column:
+                  name: category_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_category_category_id
+                    references: category(category_id)
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - addPrimaryKey:
+                  tableName: user_category
+                  columnNames: user_id, category_id
+                  constraintName: pk_user_category
+      rollback:
+        - dropTable:
+            tableName: user_category
