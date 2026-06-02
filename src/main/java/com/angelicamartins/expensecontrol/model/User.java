@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Builder
-@Table(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "user")
 public class User {
 
   @Id
@@ -37,7 +37,13 @@ public class User {
   @Column(name = "password", nullable = false)
   private String password;
 
-  @Column(name = "user_id", nullable = false)
+  @Column(name = "created_at", nullable = false)
   private ZonedDateTime createdAt;
+
+  @Column(name = "updated_at", nullable = false)
+  private ZonedDateTime updatedAt;
+
+  @Column(name = "deleted_at", nullable = false)
+  private ZonedDateTime deletedAt;
 
 }
