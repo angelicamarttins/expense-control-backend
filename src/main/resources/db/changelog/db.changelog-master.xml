@@ -13,5 +13,6 @@
     <include file="migrations/202605100905-drop-column-deleted-at-expense-table.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202605311030-create-user-table.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202605311055-create-user-category-table.yml" relativeToChangelogFile="true"/>
+    <include file="migrations/202606030750-update-users-table-name.yml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

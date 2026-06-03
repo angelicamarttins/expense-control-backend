@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202606030750
+      author: Angélica Martins
+      changes:
+        - renameTable:
+            oldTableName: user
+            newTableName: users
+
+      rollback:
+        - renameTable:
+            oldTableName: users
+            newTableName: user
