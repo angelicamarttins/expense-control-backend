@@ -44,6 +44,7 @@ public class UserDto {
       .lastName(userRequestDto.lastName())
       .email(userRequestDto.email())
       .password(userRequestDto.password())
+      .createdAt(ZonedDateTime.now())
       .build();
   }
 
