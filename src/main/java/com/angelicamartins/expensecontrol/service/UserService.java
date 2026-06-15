@@ -6,13 +6,15 @@ import static com.angelicamartins.expensecontrol.model.dto.UserDto.fromRequestDt
 import com.angelicamartins.expensecontrol.model.User;
 import com.angelicamartins.expensecontrol.model.dto.UserDto;
 import com.angelicamartins.expensecontrol.model.dto.UserRequestDto;
+import com.angelicamartins.expensecontrol.model.dto.UserRequestUpdateDto;
 import com.angelicamartins.expensecontrol.repository.UserRepository;
 import com.angelicamartins.expensecontrol.validator.UserValidator;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,21 +25,43 @@ public class UserService {
   private final UserValidator userValidator;
 
   public UserDto saveUser(UserRequestDto userRequestDto) {
-    User savedUser = userRepository.save(fromRequestDto(userRequestDto));
-
-    return fromEntity(savedUser);
+    return fromEntity(userRepository.save(fromRequestDto(userRequestDto)));
   }
 
   public List<UserDto> findUsers(Pageable pageable) {
-    Slice<User> users = userRepository.findAllBy(pageable);
-
-    return users.map(UserDto::fromEntity).getContent();
+    return userRepository
+      .findAllBy(pageable)
+      .map(UserDto::fromEntity)
+      .getContent();
   }
 
   public UserDto findUser(UUID userId) {
+    return fromEntity(userValidator.validateAndReturnUser(userId));
+  }
+
+  public UserDto updateUser(UUID userId, UserRequestUpdateDto userRequestUpdateDto) {
+    userValidator.validateUpdateRequest(userRequestUpdateDto);
     User user = userValidator.validateAndReturnUser(userId);
 
-    return fromEntity(user);
+    user.setUpdatedAt(ZonedDateTime.now());
+
+    if (Objects.nonNull(userRequestUpdateDto.firstName())) {
+      user.setFirstName(userRequestUpdateDto.firstName());
+    }
+
+    if (Objects.nonNull(userRequestUpdateDto.lastName())) {
+      user.setLastName(userRequestUpdateDto.lastName());
+    }
+
+    if (Objects.nonNull(userRequestUpdateDto.email())) {
+      user.setEmail(userRequestUpdateDto.email());
+    }
+
+    if (Objects.nonNull(userRequestUpdateDto.password())) {
+      user.setPassword(userRequestUpdateDto.password());
+    }
+
+    return fromEntity(userRepository.save(user));
   }
 
 }

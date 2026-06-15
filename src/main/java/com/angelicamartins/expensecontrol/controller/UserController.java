@@ -2,7 +2,9 @@ package com.angelicamartins.expensecontrol.controller;
 
 import com.angelicamartins.expensecontrol.model.dto.UserDto;
 import com.angelicamartins.expensecontrol.model.dto.UserRequestDto;
+import com.angelicamartins.expensecontrol.model.dto.UserRequestUpdateDto;
 import com.angelicamartins.expensecontrol.service.UserService;
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -10,6 +12,7 @@ import lombok.Data;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +40,14 @@ public class UserController {
   @GetMapping("/{userId}")
   public ResponseEntity<UserDto> getUser(@PathVariable UUID userId) {
     return ResponseEntity.ok(userService.findUser(userId));
+  }
+
+  @PatchMapping("/{userId}")
+  public ResponseEntity<UserDto> updateUser(
+    @PathVariable UUID userId,
+    @Valid @RequestBody UserRequestUpdateDto userRequestUpdateDto
+  ) {
+    return ResponseEntity.ok(userService.updateUser(userId, userRequestUpdateDto));
   }
 
 }

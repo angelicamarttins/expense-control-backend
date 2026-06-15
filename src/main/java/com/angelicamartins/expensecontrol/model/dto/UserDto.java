@@ -48,4 +48,15 @@ public class UserDto {
       .build();
   }
 
+  public static User fromRequestUpdateDto(UserRequestUpdateDto userRequestUpdateDto) {
+    return User
+      .builder()
+      .firstName(userRequestUpdateDto.firstName())
+      .lastName(userRequestUpdateDto.lastName())
+      .email(userRequestUpdateDto.email())
+      .password(userRequestUpdateDto.password())
+      .updatedAt(ZonedDateTime.now())
+      .build();
+  }
+
 }
