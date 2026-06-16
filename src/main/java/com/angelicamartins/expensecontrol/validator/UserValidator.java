@@ -1,5 +1,6 @@
 package com.angelicamartins.expensecontrol.validator;
 
+import com.angelicamartins.expensecontrol.exception.EmptyDtoException;
 import com.angelicamartins.expensecontrol.exception.UserNotFound;
 import com.angelicamartins.expensecontrol.model.User;
 import com.angelicamartins.expensecontrol.model.dto.UserRequestUpdateDto;
@@ -43,5 +44,13 @@ public class UserValidator {
     }
 
     System.out.println(nullValues == userRequestUpdateDto.getClass().getRecordComponents().length);
+
+    boolean isThereAtLeastOneField = nullValues == userRequestUpdateDto.getClass().getRecordComponents().length;
+
+    System.out.println(isThereAtLeastOneField);
+
+    if (isThereAtLeastOneField) {
+      throw new EmptyDtoException(userRequestUpdateDto.getClass().getName());
+    }
   }
 }

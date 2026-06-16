@@ -1,5 +1,6 @@
 package com.angelicamartins.expensecontrol.exception.common;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import java.net.URI;
@@ -12,7 +13,8 @@ import org.springframework.http.ProblemDetail;
 public enum ProblemDetailType {
   CATEGORY_NOT_FOUND(createUri("category-not-found"), NOT_FOUND, "Category not found"),
   EXPENSE_NOT_FOUND(createUri("expense-not-found"), NOT_FOUND, "Expense not found"),
-  USER_NOT_FOUND(createUri("user-not-found"), NOT_FOUND, "User not found");
+  USER_NOT_FOUND(createUri("user-not-found"), NOT_FOUND, "User not found"),
+  EMPTY_DTO(createUri("empty-dto"), BAD_REQUEST, "Empty DTO. Send at least one field");
 
   private static final String BASE_URI_TYPE = "https://www.expense-control.com/problems/";
   private final URI type;
