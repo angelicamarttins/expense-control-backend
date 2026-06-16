@@ -4,7 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,9 +30,9 @@ public class Category {
   private Boolean defaultCategory;
 
   @Column(name = "created_at", nullable = false, updatable = false)
-  private ZonedDateTime createdAt;
+  private LocalDateTime createdAt;
 
   @Column(name = "updated_at")
-  private ZonedDateTime updatedAt;
+  private LocalDateTime updatedAt;
 
 }

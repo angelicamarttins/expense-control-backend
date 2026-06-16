@@ -1,7 +1,7 @@
 package com.angelicamartins.expensecontrol.model.dto;
 
 import com.angelicamartins.expensecontrol.model.User;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,9 +19,9 @@ public class UserDto {
   private String lastName;
   private String email;
   private String password;
-  private ZonedDateTime createdAt;
-  private ZonedDateTime updatedAt;
-  private ZonedDateTime deletedAt;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+  private LocalDateTime deletedAt;
 
   public static UserDto fromEntity(User user) {
     return UserDto
@@ -44,7 +44,7 @@ public class UserDto {
       .lastName(userRequestDto.lastName())
       .email(userRequestDto.email())
       .password(userRequestDto.password())
-      .createdAt(ZonedDateTime.now())
+      .createdAt(LocalDateTime.now())
       .build();
   }
 
@@ -55,7 +55,7 @@ public class UserDto {
       .lastName(userRequestUpdateDto.lastName())
       .email(userRequestUpdateDto.email())
       .password(userRequestUpdateDto.password())
-      .updatedAt(ZonedDateTime.now())
+      .updatedAt(LocalDateTime.now())
       .build();
   }
 

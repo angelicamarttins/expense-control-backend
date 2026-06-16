@@ -8,7 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,10 +35,10 @@ public class Expense {
   private BigDecimal value;
 
   @Column(name = "created_at", nullable = false, updatable = false)
-  private ZonedDateTime createdAt;
+  private LocalDateTime createdAt;
 
   @Column(name = "updated_at")
-  private ZonedDateTime updatedAt;
+  private LocalDateTime updatedAt;
 
   @ManyToOne
   @JoinColumn(name = "category_id")

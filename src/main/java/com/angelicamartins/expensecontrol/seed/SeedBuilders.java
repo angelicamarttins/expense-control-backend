@@ -1,7 +1,7 @@
 package com.angelicamartins.expensecontrol.seed;
 
 import com.angelicamartins.expensecontrol.model.Category;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class SeedBuilders {
@@ -12,7 +12,7 @@ public class SeedBuilders {
       .categoryId(categoryId)
       .categoryName(categoryName)
       .defaultCategory(true)
-      .createdAt(ZonedDateTime.now())
+      .createdAt(LocalDateTime.now())
       .build();
   }
 

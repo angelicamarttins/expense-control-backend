@@ -9,7 +9,7 @@ import com.angelicamartins.expensecontrol.model.dto.UserRequestDto;
 import com.angelicamartins.expensecontrol.model.dto.UserRequestUpdateDto;
 import com.angelicamartins.expensecontrol.repository.UserRepository;
 import com.angelicamartins.expensecontrol.validator.UserValidator;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -43,7 +43,7 @@ public class UserService {
     userValidator.validateUpdateRequest(userRequestUpdateDto);
     User user = userValidator.validateAndReturnUser(userId);
 
-    user.setUpdatedAt(ZonedDateTime.now());
+    user.setUpdatedAt(LocalDateTime.now());
 
     if (Objects.nonNull(userRequestUpdateDto.firstName())) {
       user.setFirstName(userRequestUpdateDto.firstName());

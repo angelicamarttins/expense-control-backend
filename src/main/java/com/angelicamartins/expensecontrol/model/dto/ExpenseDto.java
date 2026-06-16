@@ -3,7 +3,7 @@ package com.angelicamartins.expensecontrol.model.dto;
 import com.angelicamartins.expensecontrol.model.Category;
 import com.angelicamartins.expensecontrol.model.Expense;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.Data;
@@ -15,16 +15,16 @@ public class ExpenseDto {
   private UUID expenseId;
   private String description;
   private BigDecimal value;
-  private ZonedDateTime createdAt;
-  private ZonedDateTime updatedAt;
-  private ZonedDateTime deletedAt;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+  private LocalDateTime deletedAt;
   private Category category;
 
   public static Expense fromRequestDto(ExpenseRequestDto expenseRequestDto, Category category) {
     return Expense.builder()
       .description(expenseRequestDto.description())
       .value(expenseRequestDto.value())
-      .createdAt(ZonedDateTime.now())
+      .createdAt(LocalDateTime.now())
       .category(category)
       .build();
   }

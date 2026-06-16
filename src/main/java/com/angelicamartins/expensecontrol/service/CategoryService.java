@@ -8,7 +8,7 @@ import com.angelicamartins.expensecontrol.model.dto.CategoryDto;
 import com.angelicamartins.expensecontrol.model.dto.CategoryRequestDto;
 import com.angelicamartins.expensecontrol.repository.CategoryRepository;
 import com.angelicamartins.expensecontrol.validator.CategoryValidator;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -53,7 +53,7 @@ public class CategoryService {
     Category category = categoryValidator.validateAndReturnCategory(categoryId);
 
     category.setCategoryName(categoryRequestDto.categoryName());
-    category.setUpdatedAt(ZonedDateTime.now());
+    category.setUpdatedAt(LocalDateTime.now());
 
     categoryRepository.save(category);
 

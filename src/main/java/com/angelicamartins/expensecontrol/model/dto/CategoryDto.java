@@ -1,7 +1,7 @@
 package com.angelicamartins.expensecontrol.model.dto;
 
 import com.angelicamartins.expensecontrol.model.Category;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,8 +17,8 @@ public class CategoryDto {
   private UUID categoryId;
   private String categoryName;
   private Boolean defaultCategory;
-  private ZonedDateTime createdAt;
-  private ZonedDateTime updatedAt;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 
   public static Category fromRequestDto(CategoryRequestDto categoryRequestDto) {
     return Category
@@ -26,7 +26,7 @@ public class CategoryDto {
       .categoryId(UUID.randomUUID())
       .categoryName(categoryRequestDto.categoryName())
       .defaultCategory(false)
-      .createdAt(ZonedDateTime.now())
+      .createdAt(LocalDateTime.now())
       .build();
   }
 
