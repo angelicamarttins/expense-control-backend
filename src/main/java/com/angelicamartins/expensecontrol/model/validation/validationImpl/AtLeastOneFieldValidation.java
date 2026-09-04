@@ -39,9 +39,9 @@ public class AtLeastOneFieldValidation implements ConstraintValidator<AtLeastOne
       }
     }
 
-    boolean isThereAtLeastOneField = nullValues == value.getClass().getRecordComponents().length;
+    boolean allFieldsAreNull = nullValues == value.getClass().getRecordComponents().length;
 
-    if (isThereAtLeastOneField) {
+    if (allFieldsAreNull) {
       throw new EmptyDtoException(value.getClass().getName());
     }
 
