@@ -40,7 +40,6 @@ public class UserService {
   }
 
   public UserDto updateUser(UUID userId, UserRequestUpdateDto userRequestUpdateDto) {
-    userValidator.validateUpdateRequest(userRequestUpdateDto);
     User user = userValidator.validateAndReturnUser(userId);
 
     user.setUpdatedAt(LocalDateTime.now());
