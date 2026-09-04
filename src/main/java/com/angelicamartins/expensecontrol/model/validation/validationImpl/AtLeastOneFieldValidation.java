@@ -33,12 +33,23 @@ public class AtLeastOneFieldValidation implements ConstraintValidator<AtLeastOne
 
     for (RecordComponent component : value.getClass().getRecordComponents()) {
       for (String componentKey : componentKeys) {
-        if (component.getName().equals(componentKey) && component.getAccessor().invoke(value) == null) {
+        if (component.getName().equals(componentKey)) {
+          if (component.getAccessor().invoke(value) == null) {
+            nullValues++;
+          }
+        }
+        if (component.getAccessor().invoke(value) instanceof String && value.toString().trim().isEmpty()) {
+          System.out.println("Oi sou uma string vazia");
+          nullValues++;
+        }
+        if (component.getAccessor().invoke(value) instanceof String str && str.trim().isEmpty()) {
+          System.out.println("Oi sou uma string vazia");
           nullValues++;
         }
       }
     }
 
+    System.out.println(nullValues);
     boolean allFieldsAreNull = nullValues == value.getClass().getRecordComponents().length;
 
     if (allFieldsAreNull) {
