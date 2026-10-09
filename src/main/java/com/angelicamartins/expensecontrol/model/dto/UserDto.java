@@ -37,13 +37,13 @@ public class UserDto {
       .build();
   }
 
-  public static User fromRequestDto(UserRequestDto userRequestDto) {
+  public static User fromRequestDto(UserRequestDto userRequestDto, String encodedPassword) {
     return User
       .builder()
       .firstName(userRequestDto.firstName())
       .lastName(userRequestDto.lastName())
       .email(userRequestDto.email())
-      .password(userRequestDto.password())
+      .password(encodedPassword)
       .createdAt(LocalDateTime.now())
       .build();
   }

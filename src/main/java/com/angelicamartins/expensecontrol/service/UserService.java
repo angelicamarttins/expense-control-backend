@@ -15,6 +15,7 @@ import java.util.Objects;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,9 +24,11 @@ public class UserService {
 
   private final UserRepository userRepository;
   private final UserValidator userValidator;
+  private final PasswordEncoder passwordEncoder;
 
   public UserDto saveUser(UserRequestDto userRequestDto) {
-    return fromEntity(userRepository.save(fromRequestDto(userRequestDto)));
+    String encodedPassword = passwordEncoder.encode(userRequestDto.password());
+    return fromEntity(userRepository.save(fromRequestDto(userRequestDto, encodedPassword)));
   }
 
   public List<UserDto> findUsers(Pageable pageable) {
