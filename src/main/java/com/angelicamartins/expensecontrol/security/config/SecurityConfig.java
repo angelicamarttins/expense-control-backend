@@ -13,13 +13,12 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain web(HttpSecurity http) {
-    http
-      .authorizeHttpRequests(
-        (authorize) ->
-          authorize
-            .anyRequest()
-            .permitAll()
-      );
+    http.authorizeHttpRequests(
+      (authorize) ->
+        authorize
+          .requestMatchers("/auth/**").permitAll()
+          .requestMatchers("/expense-control/**").authenticated()
+    );
 
     return http.build();
   }
