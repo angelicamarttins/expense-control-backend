@@ -42,6 +42,10 @@ public class UserService {
     return fromEntity(userValidator.validateAndReturnUser(userId));
   }
 
+  public UserDto findUserByEmail(String userEmail) {
+    return fromEntity(userValidator.validateAndReturnUserByEmail(userEmail));
+  }
+
   public UserDto updateUser(UUID userId, UserRequestUpdateDto userRequestUpdateDto) {
     User user = userValidator.validateAndReturnUser(userId);
 

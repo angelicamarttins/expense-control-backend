@@ -9,4 +9,8 @@ public class UserNotFound extends GeneralHttpException {
   public UserNotFound(UUID userId) {
     super(USER_NOT_FOUND.completeProblemDetail("userId: " + userId));
   }
+
+  public UserNotFound(String userEmail) {
+    super(USER_NOT_FOUND.completeProblemDetail("userEmail: " + userEmail));
+  }
 }

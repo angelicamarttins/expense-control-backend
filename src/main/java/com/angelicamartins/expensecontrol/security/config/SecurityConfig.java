@@ -3,6 +3,7 @@ package com.angelicamartins.expensecontrol.security.config;
 import com.password4j.AlgorithmFinder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password4j.Argon2Password4jPasswordEncoder;
@@ -13,12 +14,14 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain web(HttpSecurity http) {
-    http.authorizeHttpRequests(
-      (authorize) ->
-        authorize
-          .requestMatchers("/auth/**").permitAll()
-          .requestMatchers("/expense-control/**").authenticated()
-    );
+    http
+      .httpBasic(Customizer.withDefaults())
+      .authorizeHttpRequests(
+        (authorize) ->
+          authorize
+            .requestMatchers("/auth/**", "/error").permitAll()
+            .requestMatchers("/expense-control/**").authenticated()
+      );
 
     return http.build();
   }

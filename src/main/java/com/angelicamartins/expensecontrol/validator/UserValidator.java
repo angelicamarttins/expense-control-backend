@@ -21,4 +21,10 @@ public class UserValidator {
       .orElseThrow(() -> new UserNotFound(userId));
   }
 
+  public User validateAndReturnUserByEmail(String userEmail) {
+    return userRepository
+      .findByEmail(userEmail)
+      .orElseThrow(() -> new UserNotFound(userEmail));
+  }
+
 }
