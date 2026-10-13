@@ -16,11 +16,15 @@ public class SecurityConfig {
   public SecurityFilterChain web(HttpSecurity http) {
     http
       .httpBasic(Customizer.withDefaults())
+      .csrf(csrf -> csrf
+        .ignoringRequestMatchers("/auth/signup", "/auth/csrf")
+      )
       .authorizeHttpRequests(
         (authorize) ->
           authorize
             .requestMatchers("/auth/**", "/error").permitAll()
             .requestMatchers("/expense-control/**").authenticated()
+            .anyRequest().denyAll()
       );
 
     return http.build();
