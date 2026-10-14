@@ -14,5 +14,6 @@
     <include file="migrations/202605311030-create-user-table.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202605311055-create-user-category-table.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202606030750-update-users-table-name.yml" relativeToChangelogFile="true"/>
+    <include file="migrations/202610141100-update-users-table-add-login-retries-column.yml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

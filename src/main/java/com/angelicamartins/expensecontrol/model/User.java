@@ -37,6 +37,9 @@ public class User {
   @Column(name = "password", nullable = false)
   private String password;
 
+  @Column(name = "login_retries", nullable = false)
+  private Long loginRetries;
+
   @Column(name = "created_at", nullable = false)
   private LocalDateTime createdAt;
 
