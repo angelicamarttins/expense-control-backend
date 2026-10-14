@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202610141200
+      author: Angélica Martins
+      changes:
+        - createTable:
+            ifNotExists: true
+            tableName: otp
+            columns:
+              - column:
+                  name: otp_id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_user_id_otp_table
+                    references: users(user_id)
+              - column:
+                  name: value
+                  type: int
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: otp_retries
+                  type: int
+                  defaultValue: 0
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expires_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: consumed_at
+                  type: datetime
+              - column:
+                  name: created_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: datetime
+      rollback:
+        - dropTable:
+            tableName: otp
