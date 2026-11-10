@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202611092200
+      author: Angélica Martins
+      changes:
+        - addColumn:
+            tableName: otp
+            columns:
+              - column:
+                  name: token
+                  type: varchar(64)
+              - column:
+                  name: token_expires_at
+                  type: datetime
+              - column:
+                  name: token_consumed_at
+                  type: datetime
+      rollback:
+        - dropColumn:
+            tableName: otp
+            columns:
+              - column:
+                  name: token
+              - column:
+                  name: token_expires_at
+              - column:
+                  name: token_consumed_at
