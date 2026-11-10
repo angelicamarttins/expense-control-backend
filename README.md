@@ -2,3 +2,4 @@
 Assim, não teremos despesas sem categoria e nem impediremos o usuário de apagar categorias sem antes precisar ficar
 alterando despesa por despesa só para fazer essa ação.
 - Fazer CRUD para usuário
+![img.png](img.png)
