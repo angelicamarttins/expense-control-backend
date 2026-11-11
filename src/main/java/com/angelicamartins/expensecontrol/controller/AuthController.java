@@ -1,10 +1,13 @@
 package com.angelicamartins.expensecontrol.controller;
 
+import com.angelicamartins.expensecontrol.model.dto.ForgotPasswordRequestDto;
 import com.angelicamartins.expensecontrol.model.dto.ResetPasswordDto;
 import com.angelicamartins.expensecontrol.model.dto.UserDto;
 import com.angelicamartins.expensecontrol.model.dto.UserRequestDto;
 import com.angelicamartins.expensecontrol.service.AuthService;
+import com.angelicamartins.expensecontrol.service.OtpService;
 import com.angelicamartins.expensecontrol.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -20,8 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 public class AuthController {
 
-  private final UserService userService;
   private final AuthService authService;
+  private final OtpService otpService;
+  private final UserService userService;
 
   @GetMapping("/csrf")
   public ResponseEntity<CsrfToken> getCsrfToken(CsrfToken csrfToken) {
@@ -31,6 +35,12 @@ public class AuthController {
   @PostMapping("/signup")
   public ResponseEntity<UserDto> createUser(@RequestBody UserRequestDto userRequestDto) {
     return ResponseEntity.ok(userService.saveUser(userRequestDto));
+  }
+
+  @PostMapping("forgot-password")
+  public ResponseEntity<Void> forgotPassword(@Valid @RequestBody ForgotPasswordRequestDto requestDto) {
+    otpService.generateAndSendOtp(requestDto);
+    return ResponseEntity.noContent().build();
   }
 
   @PatchMapping("/reset-password")

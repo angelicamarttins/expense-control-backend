@@ -22,7 +22,7 @@ public class SecurityConfig {
       .httpBasic(Customizer.withDefaults())
       .cors(Customizer.withDefaults())
       .csrf(csrf -> csrf
-        .ignoringRequestMatchers("/auth/signup", "/auth/csrf")
+        .ignoringRequestMatchers("/auth/signup", "/auth/csrf", "/auth/forgot-password")
       )
       .sessionManagement(session -> session
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
