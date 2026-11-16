@@ -39,11 +39,9 @@ public class AtLeastOneFieldValidation implements ConstraintValidator<AtLeastOne
           }
         }
         if (component.getAccessor().invoke(value) instanceof String && value.toString().trim().isEmpty()) {
-          System.out.println("Oi sou uma string vazia");
           nullValues++;
         }
         if (component.getAccessor().invoke(value) instanceof String str && str.trim().isEmpty()) {
-          System.out.println("Oi sou uma string vazia");
           nullValues++;
         }
       }

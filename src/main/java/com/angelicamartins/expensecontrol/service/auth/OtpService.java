@@ -1,7 +1,11 @@
 package com.angelicamartins.expensecontrol.service.auth;
 
+import static com.angelicamartins.expensecontrol.model.dto.auth.ForgotPasswordRequestDto.fromRequestDto;
+
+import com.angelicamartins.expensecontrol.model.auth.Otp;
 import com.angelicamartins.expensecontrol.model.dto.auth.ForgotPasswordRequestDto;
 import com.angelicamartins.expensecontrol.model.user.User;
+import com.angelicamartins.expensecontrol.repository.user.UserRepository;
 import com.angelicamartins.expensecontrol.validator.user.UserValidator;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -20,14 +24,19 @@ public class OtpService {
   private static final int SALT_LENGTH = 16;
   private static final SecureRandom RANDOM = new SecureRandom();
 
+  private final UserRepository userRepository;
   private final UserValidator userValidator;
 
   public void generateAndSendOtp(ForgotPasswordRequestDto requestDto) {
     User user = userValidator.validateAndReturnUserByEmail(requestDto.userEmail());
 
-    Map<String, String> otp = generateSecureRandomOtp();
-    String rawOtp = otp.get("rawOtp");
-    String hashedOtp = otp.get("hashedOtp");
+    Map<String, String> generatedOtp = generateSecureRandomOtp();
+    String rawOtp = generatedOtp.get("rawOtp");
+    String hashedOtp = generatedOtp.get("hashedOtp");
+
+    Otp otp = fromRequestDto(requestDto);
+
+//   userRepository.save();
 
     System.out.println(requestDto.userEmail());
     System.out.println(rawOtp);
