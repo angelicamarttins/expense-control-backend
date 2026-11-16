@@ -1,8 +1,8 @@
 package com.angelicamartins.expensecontrol.security.config;
 
-import static com.angelicamartins.expensecontrol.model.UserDetailsVo.fromUserDto;
+import static com.angelicamartins.expensecontrol.model.user.UserDetailsVo.fromUserDto;
 
-import com.angelicamartins.expensecontrol.service.UserService;
+import com.angelicamartins.expensecontrol.service.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

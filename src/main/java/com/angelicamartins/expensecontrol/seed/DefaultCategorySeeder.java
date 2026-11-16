@@ -2,8 +2,8 @@ package com.angelicamartins.expensecontrol.seed;
 
 import static com.angelicamartins.expensecontrol.seed.SeedBuilders.buildDefaultCategory;
 
-import com.angelicamartins.expensecontrol.model.Category;
-import com.angelicamartins.expensecontrol.repository.CategoryRepository;
+import com.angelicamartins.expensecontrol.model.category.Category;
+import com.angelicamartins.expensecontrol.repository.category.CategoryRepository;
 import jakarta.transaction.Transactional;
 import java.io.BufferedReader;
 import java.io.InputStream;

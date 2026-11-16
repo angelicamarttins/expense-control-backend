@@ -14,22 +14,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestAdvice {
 
-  @Before("execution(* com.angelicamartins.expensecontrol.controller.CategoryController.*(..))")
+  @Before("execution(* com.angelicamartins.expensecontrol.controller.category.CategoryController.*(..))")
   public void beforeAnyExecution() {
     System.out.println("Before any execution in CategoryController");
   }
 
-  @After("execution(* com.angelicamartins.expensecontrol.controller.CategoryController.*(..))")
+  @After("execution(* com.angelicamartins.expensecontrol.controller.category.CategoryController.*(..))")
   public void afterAnyExecution() {
     System.out.println("After any execution in CategoryController");
   }
 
-  @AfterReturning("execution(* com.angelicamartins.expensecontrol.controller.CategoryController.*(..))")
+  @AfterReturning("execution(* com.angelicamartins.expensecontrol.controller.category.CategoryController.*(..))")
   public void afterReturningAnyExecution() {
     System.out.println("After returning any execution in CategoryController");
   }
 
-  @Around("execution(* com.angelicamartins.expensecontrol.controller.CategoryController.*(..))")
+  @Around("execution(* com.angelicamartins.expensecontrol.controller.category.CategoryController.*(..))")
   public Object aroundAnyExecution(ProceedingJoinPoint pjp) {
     System.out.println("---START--- Around any execution in CategoryController");
     ZonedDateTime startRequest = ZonedDateTime.now();

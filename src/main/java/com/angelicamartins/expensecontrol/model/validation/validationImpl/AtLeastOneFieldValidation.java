@@ -1,7 +1,7 @@
 package com.angelicamartins.expensecontrol.model.validation.validationImpl;
 
-import com.angelicamartins.expensecontrol.exception.AnnotationNotValid;
-import com.angelicamartins.expensecontrol.exception.EmptyDtoException;
+import com.angelicamartins.expensecontrol.exception.common.AnnotationNotValid;
+import com.angelicamartins.expensecontrol.exception.common.EmptyDtoException;
 import com.angelicamartins.expensecontrol.model.validation.AtLeastOneField;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

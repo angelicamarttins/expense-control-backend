@@ -1,6 +1,6 @@
 package com.angelicamartins.expensecontrol.seed;
 
-import com.angelicamartins.expensecontrol.model.Category;
+import com.angelicamartins.expensecontrol.model.category.Category;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

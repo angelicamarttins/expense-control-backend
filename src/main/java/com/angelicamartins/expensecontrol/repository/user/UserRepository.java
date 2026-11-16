@@ -1,0 +1,16 @@
+package com.angelicamartins.expensecontrol.repository.user;
+
+import com.angelicamartins.expensecontrol.model.user.User;
+import java.util.Optional;
+import java.util.UUID;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UserRepository extends JpaRepository<User, UUID> {
+
+  Slice<User> findAllBy(Pageable pageable);
+
+  Optional<User> findByEmail(String userEmail);
+
+}
