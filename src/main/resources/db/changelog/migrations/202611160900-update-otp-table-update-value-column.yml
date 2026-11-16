@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202611160900
+      author: Angélica Martins
+      changes:
+        - modifyDataType:
+            tableName: otp
+            columnName: value
+            newDataType: varchar(64)
+      rollback:
+        - modifyDataType:
+            tableName: otp
+            columnName: value
+            newDataType: int
