@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202611160940
+      author: Angélica Martins
+      changes:
+        - dropColumn:
+            tableName: otp
+            columns:
+              - column:
+                  name: expires_at
+              - column:
+                  name: token_expires_at
+        - addColumn:
+            tableName: otp
+            columns:
+              - column:
+                  name: expires_at
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token_expires_at
+                  type: bigint
+      rollback:
+        - dropColumn:
+            tableName: otp
+            columns:
+              - column:
+                  name: expires_at
+              - column:
+                  name: token_expires_at
+        - addColumn:
+            tableName: otp
+            columns:
+              - column:
+                  name: expires_at
+                  type: datetime
+                  constraints:
+                    nullable: false
+              - column:
+                  name: token_expires_at
+                  type: datetime

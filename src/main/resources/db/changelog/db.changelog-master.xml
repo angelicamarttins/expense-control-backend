@@ -18,5 +18,6 @@
     <include file="migrations/202610141200-create-otp-table.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202611092200-update-otp-table-add-token-columns.yml" relativeToChangelogFile="true"/>
     <include file="migrations/202611160900-update-otp-table-update-value-column.yml" relativeToChangelogFile="true"/>
+    <include file="migrations/202611160940-update-otp-table-update-expires-columns.yml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
