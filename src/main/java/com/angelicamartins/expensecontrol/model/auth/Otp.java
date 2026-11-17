@@ -14,6 +14,7 @@ import jakarta.persistence.Table;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,7 +46,7 @@ public class Otp {
   private Integer otpRetries = 0;
 
   @Column(name = "expires_at", nullable = false)
-  private Instant expiresAt;
+  private Long expiresAt;
 
   @Column(name = "consumed_at")
   private LocalDateTime consumedAt;
@@ -60,21 +61,21 @@ public class Otp {
   private String token;
 
   @Column(name = "token_expires_at")
-  private Instant tokenExpiresAt;
+  private Long tokenExpiresAt;
 
   @Column(name = "token_consumed_at")
   private LocalDateTime tokenConsumedAt;
 
   public static Otp toEntity(String value, User user, Integer retries) {
     Instant createdAt = Instant.now();
-    Instant expiresAt = createdAt.plus(Duration.ofMinutes(5));
+    long expiresAt = createdAt.plus(Duration.ofMinutes(5)).toEpochMilli();
 
     return Otp
       .builder()
       .value(value)
       .otpRetries(hasRetries(retries))
       .user(user)
-      .createdAt(LocalDateTime.now())
+      .createdAt(LocalDateTime.ofInstant(createdAt, ZoneId.of("America/Sao_Paulo")))
       .expiresAt(expiresAt)
       .build();
   }
