@@ -37,8 +37,9 @@ public class User {
   @Column(name = "password", nullable = false)
   private String password;
 
+  @Builder.Default
   @Column(name = "login_retries", nullable = false)
-  private Long loginRetries;
+  private Long loginRetries = 0L;
 
   @Column(name = "created_at", nullable = false)
   private LocalDateTime createdAt;

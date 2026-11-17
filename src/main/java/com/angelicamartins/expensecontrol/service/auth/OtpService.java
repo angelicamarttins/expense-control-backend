@@ -7,6 +7,9 @@ import com.angelicamartins.expensecontrol.model.dto.auth.ForgotPasswordRequestDt
 import com.angelicamartins.expensecontrol.model.user.User;
 import com.angelicamartins.expensecontrol.repository.auth.OtpRepository;
 import com.angelicamartins.expensecontrol.validator.user.UserValidator;
+import com.resend.Resend;
+import com.resend.core.exception.ResendException;
+import com.resend.services.emails.model.CreateEmailOptions;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,6 +19,7 @@ import java.util.Base64;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 @Service
@@ -26,6 +30,8 @@ public class OtpService {
   private static final SecureRandom RANDOM = new SecureRandom();
 
   private final OtpRepository otpRepository;
+  private final Resend resend;
+  private final TemplateEngine templateEngine;
   private final UserValidator userValidator;
 
   public void generateAndSendOtp(ForgotPasswordRequestDto requestDto) {
@@ -39,10 +45,6 @@ public class OtpService {
     otpRepository.save(otp);
 
     sendOtp(rawOtp, user.getEmail(), otp.getExpiresAt());
-
-    System.out.println(requestDto.userEmail());
-    System.out.println(rawOtp);
-    System.out.println(hashedOtp);
   }
 
   private Map<String, String> generateSecureRandomOtp() {
@@ -91,8 +93,21 @@ public class OtpService {
     Context context = new Context();
     context.setVariable("otp", rawOtp);
     context.setVariable("expiresInMinutes", expiresAt);
+    String html = templateEngine.process("otp", context);
 
+    CreateEmailOptions params = CreateEmailOptions
+      .builder()
+      .from("Angélica Martins <onboarding@resend.dev>")
+      .to(userEmail)
+      .subject("Código de verificação")
+      .html(html)
+      .build();
 
+    try {
+      resend.emails().send(params);
+    } catch (ResendException e) {
+      throw new RuntimeException(e);
+    }
   }
 
 }

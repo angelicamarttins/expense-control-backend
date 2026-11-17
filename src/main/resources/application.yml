@@ -16,3 +16,5 @@ spring:
 logging:
   level:
     org.springframework.security: TRACE
+resend:
+  apikey: ${RESEND_API_KEY}
