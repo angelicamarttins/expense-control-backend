@@ -1,11 +1,11 @@
 package com.angelicamartins.expensecontrol.service.auth;
 
-import static com.angelicamartins.expensecontrol.model.dto.auth.ForgotPasswordRequestDto.fromRequestDto;
+import static com.angelicamartins.expensecontrol.model.auth.Otp.toEntity;
 
 import com.angelicamartins.expensecontrol.model.auth.Otp;
 import com.angelicamartins.expensecontrol.model.dto.auth.ForgotPasswordRequestDto;
 import com.angelicamartins.expensecontrol.model.user.User;
-import com.angelicamartins.expensecontrol.repository.user.UserRepository;
+import com.angelicamartins.expensecontrol.repository.auth.OtpRepository;
 import com.angelicamartins.expensecontrol.validator.user.UserValidator;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,6 +16,7 @@ import java.util.Base64;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.context.Context;
 
 @Service
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class OtpService {
   private static final int SALT_LENGTH = 16;
   private static final SecureRandom RANDOM = new SecureRandom();
 
-  private final UserRepository userRepository;
+  private final OtpRepository otpRepository;
   private final UserValidator userValidator;
 
   public void generateAndSendOtp(ForgotPasswordRequestDto requestDto) {
@@ -33,10 +34,11 @@ public class OtpService {
     Map<String, String> generatedOtp = generateSecureRandomOtp();
     String rawOtp = generatedOtp.get("rawOtp");
     String hashedOtp = generatedOtp.get("hashedOtp");
+    Otp otp = toEntity(hashedOtp, user, 0);
 
-    Otp otp = fromRequestDto(requestDto);
+    otpRepository.save(otp);
 
-//   userRepository.save();
+    sendOtp(rawOtp, user.getEmail(), otp.getExpiresAt());
 
     System.out.println(requestDto.userEmail());
     System.out.println(rawOtp);
@@ -83,6 +85,14 @@ public class OtpService {
     } catch (NoSuchAlgorithmException e) {
       throw new IllegalStateException(e); // SHA-256 sempre existe na JVM
     }
+  }
+
+  public void sendOtp(String rawOtp, String userEmail, Long expiresAt) {
+    Context context = new Context();
+    context.setVariable("otp", rawOtp);
+    context.setVariable("expiresInMinutes", expiresAt);
+
+
   }
 
 }
