@@ -3,109 +3,47 @@ package com.angelicamartins.expensecontrol.service.auth;
 import static com.angelicamartins.expensecontrol.model.auth.Otp.toEntity;
 
 import com.angelicamartins.expensecontrol.model.dto.auth.ForgotPasswordRequestDto;
+import com.angelicamartins.expensecontrol.model.dto.auth.VerifyOtpDto;
 import com.angelicamartins.expensecontrol.model.user.User;
+import com.angelicamartins.expensecontrol.notification.email.OtpEmailSender;
 import com.angelicamartins.expensecontrol.repository.auth.OtpRepository;
+import com.angelicamartins.expensecontrol.security.otp.OtpGenerator;
+import com.angelicamartins.expensecontrol.security.otp.OtpHasher;
 import com.angelicamartins.expensecontrol.validator.user.UserValidator;
-import com.resend.Resend;
-import com.resend.core.exception.ResendException;
-import com.resend.services.emails.model.CreateEmailOptions;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Map;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
 
 @Service
 @AllArgsConstructor
 public class OtpService {
 
-  private static final int SALT_LENGTH = 16;
-  private static final SecureRandom RANDOM = new SecureRandom();
-
-  private final OtpRepository otpRepository;
-  private final Resend resend;
-  private final TemplateEngine templateEngine;
   private final UserValidator userValidator;
+  private final OtpEmailSender otpEmailSender;
+  private final OtpGenerator otpGenerator;
+  private final OtpHasher otpHasher;
+  private final OtpRepository otpRepository;
 
   public void generateAndSendOtp(ForgotPasswordRequestDto requestDto) {
     User user = userValidator.validateAndReturnUserByEmail(requestDto.userEmail());
 
-    Map<String, String> generatedOtp = generateSecureRandomOtp();
-    String rawOtp = generatedOtp.get("rawOtp");
-    String hashedOtp = generatedOtp.get("hashedOtp");
+    String rawOtp = otpGenerator.generate();
+    otpRepository.save(toEntity(otpHasher.hash(rawOtp), user, 0));
 
-    otpRepository.save(toEntity(hashedOtp, user, 0));
-
-    sendOtp(rawOtp, user);
+    otpEmailSender.send(rawOtp, user);
   }
 
-  private Map<String, String> generateSecureRandomOtp() {
-    int code = RANDOM.nextInt(1_000_000);
-    String rawOtp = String.format("%06d", code);
-
-    String hashedOtp = hashOtp(rawOtp);
-
-    return Map.of("rawOtp", rawOtp, "hashedOtp", hashedOtp);
-  }
-
-  public String hashOtp(String rawOtp) {
-    byte[] salt = new byte[SALT_LENGTH];
-    RANDOM.nextBytes(salt);
-
-    byte[] hash = sha256(salt, rawOtp);
-
-    byte[] combined = new byte[SALT_LENGTH + hash.length];
-    System.arraycopy(salt, 0, combined, 0, SALT_LENGTH);
-    System.arraycopy(hash, 0, combined, SALT_LENGTH, hash.length);
-
-    return Base64.getEncoder().encodeToString(combined);
-  }
-
-  public boolean matchesOtp(String rawOtp, String storedOtp) {
-    byte[] combined = Base64.getDecoder().decode(storedOtp);
-
-    byte[] salt = Arrays.copyOfRange(combined, 0, SALT_LENGTH);
-    byte[] expected = Arrays.copyOfRange(combined, SALT_LENGTH, combined.length);
-
-    byte[] actual = sha256(salt, rawOtp);
-    return MessageDigest.isEqual(expected, actual);
-  }
-
-  private byte[] sha256(byte[] salt, String rawOtp) {
-    try {
-      MessageDigest digest = MessageDigest.getInstance("SHA-256");
-      digest.update(salt);
-      return digest.digest(rawOtp.getBytes(StandardCharsets.UTF_8));
-    } catch (NoSuchAlgorithmException e) {
-      throw new IllegalStateException(e); // SHA-256 sempre existe na JVM
-    }
-  }
-
-  public void sendOtp(String rawOtp, User user) {
-    Context context = new Context();
-    context.setVariable("otp", rawOtp);
-    context.setVariable("userFirstName", user.getFirstName());
-    String html = templateEngine.process("otp", context);
-
-    CreateEmailOptions params = CreateEmailOptions
-      .builder()
-      .from("Expense Control App <onboarding@resend.dev>")
-      .to(user.getEmail())
-      .subject("Redefinição de senha")
-      .html(html)
-      .build();
-
-    try {
-      resend.emails().send(params);
-    } catch (ResendException e) {
-      throw new RuntimeException(e);
-    }
+  public void matchOtp(VerifyOtpDto.Request requestDto) {
+    // request tem que ter email
+    // buscar user id
+    // obter horário atual, transformar em millis e enviar para query para achar registro com mesmo user id e expires at menor
+    // query para buscar otp com menos de 5 minutos com o user id
+    // se estiver expirado, passou da quantidade de tentativas, otp não encontrado, criar expection genérica de otp inválido
+    // encontrou e está dentro do prazo de expiração (isso já será validado ao ser encontrado), validar quantidade de tentativas
+    // tudo certo, calcular hash do otp
+    // comparar com hash presente no banco
+    // inválido se não for o mesmo otp
+    // gerar token
+    // retornar token e finalizar fluxo
   }
 
 }

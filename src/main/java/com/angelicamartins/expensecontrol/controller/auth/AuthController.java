@@ -2,6 +2,7 @@ package com.angelicamartins.expensecontrol.controller.auth;
 
 import com.angelicamartins.expensecontrol.model.dto.auth.ForgotPasswordRequestDto;
 import com.angelicamartins.expensecontrol.model.dto.auth.ResetPasswordDto;
+import com.angelicamartins.expensecontrol.model.dto.auth.VerifyOtpDto;
 import com.angelicamartins.expensecontrol.model.dto.user.UserDto;
 import com.angelicamartins.expensecontrol.model.dto.user.UserRequestDto;
 import com.angelicamartins.expensecontrol.service.auth.AuthService;
@@ -46,6 +47,13 @@ public class AuthController {
   @PatchMapping("/reset-password")
   public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordDto.Request resetPasswordRequestDto) {
     authService.resetPassword(resetPasswordRequestDto);
+
+    return ResponseEntity.noContent().build();
+  }
+
+  @PostMapping("verify-otp")
+  public ResponseEntity<Void> verifyOtp(@Valid @RequestBody VerifyOtpDto.Request verifyOtpRequestDto) {
+    otpService.matchOtp(verifyOtpRequestDto);
 
     return ResponseEntity.noContent().build();
   }
