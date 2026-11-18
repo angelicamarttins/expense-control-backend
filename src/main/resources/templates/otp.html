@@ -7,11 +7,12 @@
 <body style="margin:0; padding:24px; background:#f4f4f5; font-family:Arial, sans-serif; color:#18181b;">
 <div style="max-width:480px; margin:0 auto; background:#ffffff; border-radius:8px; padding:32px;">
     <h1 style="font-size:20px; margin:0 0 16px;">Redefinição de senha</h1>
+    <p>Olá, <span th:text="${userFirstName}">Nome</span>!</p>
     <p style="margin:0 0 24px;">Use o código abaixo para redefinir sua senha:</p>
     <p style="font-size:32px; font-weight:bold; letter-spacing:8px; text-align:center; margin:0 0 24px;"
        th:text="${otp}">123456</p>
     <p style="margin:0; font-size:14px; color:#71717a;">
-        O código expira em <span th:text="${expiresInMinutes}">5</span> minutos.
+        O código expira em 5 minutos.
         Se você não pediu isso, ignore este e-mail.
     </p>
 </div>

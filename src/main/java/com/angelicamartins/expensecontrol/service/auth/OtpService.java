@@ -2,7 +2,6 @@ package com.angelicamartins.expensecontrol.service.auth;
 
 import static com.angelicamartins.expensecontrol.model.auth.Otp.toEntity;
 
-import com.angelicamartins.expensecontrol.model.auth.Otp;
 import com.angelicamartins.expensecontrol.model.dto.auth.ForgotPasswordRequestDto;
 import com.angelicamartins.expensecontrol.model.user.User;
 import com.angelicamartins.expensecontrol.repository.auth.OtpRepository;
@@ -40,11 +39,10 @@ public class OtpService {
     Map<String, String> generatedOtp = generateSecureRandomOtp();
     String rawOtp = generatedOtp.get("rawOtp");
     String hashedOtp = generatedOtp.get("hashedOtp");
-    Otp otp = toEntity(hashedOtp, user, 0);
 
-    otpRepository.save(otp);
+    otpRepository.save(toEntity(hashedOtp, user, 0));
 
-    sendOtp(rawOtp, user.getEmail(), otp.getExpiresAt());
+    sendOtp(rawOtp, user);
   }
 
   private Map<String, String> generateSecureRandomOtp() {
@@ -89,17 +87,17 @@ public class OtpService {
     }
   }
 
-  public void sendOtp(String rawOtp, String userEmail, Long expiresAt) {
+  public void sendOtp(String rawOtp, User user) {
     Context context = new Context();
     context.setVariable("otp", rawOtp);
-    context.setVariable("expiresInMinutes", expiresAt);
+    context.setVariable("userFirstName", user.getFirstName());
     String html = templateEngine.process("otp", context);
 
     CreateEmailOptions params = CreateEmailOptions
       .builder()
-      .from("Angélica Martins <onboarding@resend.dev>")
-      .to(userEmail)
-      .subject("Código de verificação")
+      .from("Expense Control App <onboarding@resend.dev>")
+      .to(user.getEmail())
+      .subject("Redefinição de senha")
       .html(html)
       .build();
 
