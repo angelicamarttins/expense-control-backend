@@ -52,10 +52,8 @@ public class AuthController {
   }
 
   @PostMapping("verify-otp")
-  public ResponseEntity<Void> verifyOtp(@Valid @RequestBody VerifyOtpDto.Request verifyOtpRequestDto) {
-    otpService.matchOtp(verifyOtpRequestDto);
-
-    return ResponseEntity.noContent().build();
+  public ResponseEntity<VerifyOtpDto.Response> verifyOtp(@Valid @RequestBody VerifyOtpDto.Request verifyOtpRequestDto) {
+    return ResponseEntity.ok(otpService.matchOtp(verifyOtpRequestDto));
   }
 
 }

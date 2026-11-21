@@ -22,6 +22,7 @@ public class UserDto {
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
   private LocalDateTime deletedAt;
+  private Long loginRetries;
 
   public static UserDto fromEntity(User user) {
     return UserDto
@@ -34,6 +35,22 @@ public class UserDto {
       .createdAt(user.getCreatedAt())
       .updatedAt(user.getUpdatedAt())
       .deletedAt(user.getDeletedAt())
+      .loginRetries(user.getLoginRetries())
+      .build();
+  }
+
+  public static User toEntity(UserDto userDto) {
+    return User
+      .builder()
+      .userId(userDto.userId)
+      .firstName(userDto.getFirstName())
+      .lastName(userDto.getLastName())
+      .email(userDto.getEmail())
+      .password(userDto.getPassword())
+      .createdAt(userDto.createdAt)
+      .updatedAt(userDto.updatedAt)
+      .deletedAt(userDto.deletedAt)
+      .loginRetries(userDto.loginRetries)
       .build();
   }
 

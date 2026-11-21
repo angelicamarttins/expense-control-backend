@@ -1,6 +1,6 @@
 package com.angelicamartins.expensecontrol.notification.email;
 
-import com.angelicamartins.expensecontrol.model.user.User;
+import com.angelicamartins.expensecontrol.model.dto.user.UserDto;
 import com.resend.Resend;
 import com.resend.core.exception.ResendException;
 import com.resend.services.emails.model.CreateEmailOptions;
@@ -16,7 +16,7 @@ public class OtpEmailSender {
   private final Resend resend;
   private final TemplateEngine templateEngine;
 
-  public void send(String rawOtp, User user) {
+  public void send(String rawOtp, UserDto user) {
     Context context = new Context();
     context.setVariable("otp", rawOtp);
     context.setVariable("userFirstName", user.getFirstName());

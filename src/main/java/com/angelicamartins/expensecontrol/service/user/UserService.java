@@ -2,12 +2,12 @@ package com.angelicamartins.expensecontrol.service.user;
 
 import static com.angelicamartins.expensecontrol.model.dto.user.UserDto.fromEntity;
 import static com.angelicamartins.expensecontrol.model.dto.user.UserDto.fromRequestDto;
+import static com.angelicamartins.expensecontrol.model.dto.user.UserDto.toEntity;
 import static com.angelicamartins.expensecontrol.service.auth.PasswordService.encodePassword;
 
 import com.angelicamartins.expensecontrol.model.dto.user.UserDto;
 import com.angelicamartins.expensecontrol.model.dto.user.UserRequestDto;
 import com.angelicamartins.expensecontrol.model.dto.user.UserRequestUpdateDto;
-import com.angelicamartins.expensecontrol.model.user.User;
 import com.angelicamartins.expensecontrol.repository.user.UserRepository;
 import com.angelicamartins.expensecontrol.validator.user.UserValidator;
 import java.time.LocalDateTime;
@@ -38,15 +38,15 @@ public class UserService {
   }
 
   public UserDto findUser(UUID userId) {
-    return fromEntity(userValidator.validateAndReturnUser(userId));
+    return userValidator.validateAndReturnUser(userId);
   }
 
   public UserDto findUserByEmail(String userEmail) {
-    return fromEntity(userValidator.validateAndReturnUserByEmail(userEmail));
+    return userValidator.validateAndReturnUserByEmail(userEmail);
   }
 
   public UserDto updateUser(UUID userId, UserRequestUpdateDto userRequestUpdateDto) {
-    User user = userValidator.validateAndReturnUser(userId);
+    UserDto user = userValidator.validateAndReturnUser(userId);
 
     user.setUpdatedAt(LocalDateTime.now());
 
@@ -62,14 +62,14 @@ public class UserService {
       user.setEmail(userRequestUpdateDto.email());
     }
 
-    return fromEntity(userRepository.save(user));
+    return fromEntity(userRepository.save(toEntity(user)));
   }
 
-  public UserDto updatePassword(User user, String newPassword) {
+  public void updatePassword(UserDto user, String newPassword) {
     user.setPassword(newPassword);
     user.setUpdatedAt(LocalDateTime.now());
 
-    return fromEntity(userRepository.save(user));
+    userRepository.save(toEntity(user));
   }
 
 }
