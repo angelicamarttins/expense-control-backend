@@ -63,24 +63,41 @@ public class OtpService {
         throw new InvalidOtp();
       }
     } catch (InvalidOtp exception) {
-      otp.setOtpRetries(incrementOtp(otp.getOtpRetries()));
-
-      otpRepository.save(toEntity(otp));
+      updateOtpRetries(otp);
 
       throw exception;
     }
 
+    otpRepository.invalidateActiveTokens(user.getUserId(), nowAsLocal);
+
     String rawToken = otpGenerator.generateToken();
     String hashedToken = otpHasher.hashToken(rawToken);
 
-    otp.setConsumedAt(nowAsLocal);
-    otp.setToken(hashedToken);
-    otp.setTokenExpiresAt(otpGenerator.generateExpiresAt().expiresAt());
-    otp.setUpdatedAt(nowAsLocal);
-
-    otpRepository.save(toEntity(otp));
+    updateOtpToken(otp, nowAsLocal, hashedToken);
 
     return new VerifyOtpDto.Response(rawToken);
+  }
+
+  public void updateOtpRetries(OtpDto otp) {
+    otp.setOtpRetries(incrementOtp(otp.getOtpRetries()));
+
+    otpRepository.save(toEntity(otp));
+  }
+
+  public void updateOtpToken(OtpDto otp, LocalDateTime now, String hashedToken) {
+    otp.setConsumedAt(now);
+    otp.setToken(hashedToken);
+    otp.setTokenExpiresAt(otpGenerator.generateExpiresAt().expiresAt());
+    otp.setUpdatedAt(now);
+
+    otpRepository.save(toEntity(otp));
+  }
+
+  public void updateOtpTokenConsumedAt(OtpDto otp, LocalDateTime now) {
+    otp.setTokenConsumedAt(now);
+    otp.setUpdatedAt(now);
+
+    otpRepository.save(toEntity(otp));
   }
 
   private Integer incrementOtp(Integer otpRetries) {

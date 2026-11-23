@@ -16,7 +16,8 @@ public enum ProblemDetailType {
   USER_NOT_FOUND(createUri("user-not-found"), NOT_FOUND, "User not found"),
   EMPTY_DTO(createUri("empty-dto"), BAD_REQUEST, "Empty DTO. Send at least one field"),
   ANNOTATION_NOT_VALID(createUri("annotation-not-valid"), BAD_REQUEST, "Annotation valid only for Record"),
-  INVALID_OTP(createUri("invalid-otp"), BAD_REQUEST, "Invalid OTP");
+  INVALID_OTP(createUri("invalid-otp"), BAD_REQUEST, "Invalid OTP"),
+  INVALID_OTP_TOKEN(createUri("invalid-otp-token"), BAD_REQUEST, "Invalid OTP token. Generate new OTP and try again");
 
   private static final String BASE_URI_TYPE = "https://www.expense-control.com/problems/";
   private final URI type;
