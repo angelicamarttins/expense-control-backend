@@ -48,7 +48,7 @@ public class OtpService {
       )
     );
 
-    otpEmailSender.send(rawOtp, user);
+    otpEmailSender.sendOtp(rawOtp, user);
   }
 
   public VerifyOtpDto.Response matchOtp(VerifyOtpDto.Request requestDto) {

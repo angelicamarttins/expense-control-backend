@@ -16,7 +16,7 @@ public class OtpEmailSender {
   private final Resend resend;
   private final TemplateEngine templateEngine;
 
-  public void send(String rawOtp, UserDto user) {
+  public void sendOtp(String rawOtp, UserDto user) {
     Context context = new Context();
     context.setVariable("otp", rawOtp);
     context.setVariable("userFirstName", user.getFirstName());

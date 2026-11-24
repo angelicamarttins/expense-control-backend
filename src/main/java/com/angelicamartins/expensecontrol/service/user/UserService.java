@@ -72,4 +72,15 @@ public class UserService {
     userRepository.save(toEntity(user));
   }
 
+  public void updateLoginRetries(UserDto user, Long retries) {
+    user.setLoginRetries(retries);
+    user.setUpdatedAt(LocalDateTime.now());
+
+    userRepository.save(toEntity(user));
+  }
+
+  public Long incrementLoginRetries(Long loginRetries) {
+    return loginRetries + 1;
+  }
+
 }
