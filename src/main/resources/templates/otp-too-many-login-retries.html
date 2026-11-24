@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Uma sugestão para a sua conta</title>
+</head>
+<body style="margin:0; padding:24px; background:#f4f4f5; font-family:Arial, sans-serif; color:#18181b;">
+<div style="max-width:480px; margin:0 auto; background:#ffffff; border-radius:8px; padding:32px;">
+    <h1 style="font-size:20px; margin:0 0 16px;">Uma sugestão para a sua conta</h1>
+    <p style="margin:0 0 16px;">Olá, <span th:text="${userFirstName}">Nome</span>!</p>
+    <p style="margin:0 0 16px; line-height:1.5;">
+        Percebemos algumas tentativas de acesso à sua conta que não deram certo.
+    </p>
+    <p style="margin:0 0 24px; line-height:1.5;">
+        Ainda assim, para manter sua conta bem protegida, sugerimos que você
+        troque sua senha imediatamente. De preferência, escolha uma
+        senha forte e que você não use em outros lugares.
+    </p>
+    <p style="margin:0; font-size:14px; color:#71717a; line-height:1.5;">
+        Obrigado por usar o Expense Control App!
+    </p>
+</div>
+</body>
+</html>
