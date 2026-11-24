@@ -1,4 +1,4 @@
-package com.angelicamartins.expensecontrol.notification.email;
+package com.angelicamartins.expensecontrol.notification.email.config;
 
 import com.resend.Resend;
 import org.springframework.beans.factory.annotation.Value;
